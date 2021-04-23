@@ -1,0 +1,172 @@
+<html>
+<head>
+  <title>Deep Learning Demo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+</head>
+<body>
+    <!-- https://stackoverflow.com/questions/22891827/how-do-i-hand-draw-on-canvas-with-javascript -->
+  <style>
+  #sheet {
+    border:1px solid black;
+  }
+  </style>
+  <canvas id="sheet" width="280" height="280"></canvas>
+  <button onclick='recNumber()'>识别</button>
+  <button onclick='clearNumber()'>再试一次</button>
+  <div id='res'></div>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/EaselJS/0.7.1/easeljs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/nicolaspanel/numjs@0.15.1/dist/numjs.min.js"></script>
+
+  <!-- 画数字以及相关操作 -->
+  <script>
+    var canvas, stage;
+    var drawingCanvas;
+    var oldPt;
+    var oldMidPt;
+    var color;
+    var stroke;
+    var index;
+
+    function init()
+    {
+      canvas = document.getElementById("sheet");
+      index = 0;
+
+      //check to see if we are running in a browser with touch support
+      stage = new createjs.Stage(canvas);
+      stage.autoClear = false;
+      stage.enableDOMEvents(true);
+
+      createjs.Touch.enable(stage);
+      createjs.Ticker.setFPS(24);
+
+      drawingCanvas = new createjs.Shape();
+
+      stage.addEventListener("stagemousedown", handleMouseDown);
+      stage.addEventListener("stagemouseup", handleMouseUp);
+
+      stage.addChild(drawingCanvas);
+      stage.update();
+    }
+
+    function stop() {}
+
+    function handleMouseDown(event) {
+      color = "#000000";
+      stroke = 25;
+      oldPt = new createjs.Point(stage.mouseX, stage.mouseY);
+      oldMidPt = oldPt;
+      stage.addEventListener("stagemousemove" , handleMouseMove);
+    }
+
+    function handleMouseMove(event) {
+      var midPt = new createjs.Point(oldPt.x + stage.mouseX>>1, oldPt.y+stage.mouseY>>1);
+
+      drawingCanvas.graphics.clear().setStrokeStyle(stroke, 'round', 'round').beginStroke(color).moveTo(midPt.x, midPt.y).curveTo(oldPt.x, oldPt.y, oldMidPt.x, oldMidPt.y);
+
+      oldPt.x = stage.mouseX;
+      oldPt.y = stage.mouseY;
+
+      oldMidPt.x = midPt.x;
+      oldMidPt.y = midPt.y;
+
+      stage.update();
+    }
+
+    function handleMouseUp(event) {
+      stage.removeEventListener("stagemousemove" , handleMouseMove);
+    }
+
+    function clearNumber() {
+      stage.clear();
+      document.querySelector('#res').innerHTML = '';
+    }
+
+    function recNumber() {
+      // https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Pixel_manipulation_with_canvas
+      var ctx = canvas.getContext('2d');
+      var inputs = [];
+      for (var y = 0; y < 280; y+=10) {
+        var input = [];
+
+        for (var x = 0; x < 280; x+=10) {
+          var data = ctx.getImageData(x, y, 10, 10).data;
+          var sum = 0;
+          for (var i = 3; i < 400; i+=4) {
+            sum += data[i];
+          }
+          input.push(sum / (255 * 100));
+          // input.push((sum / (255 * 100)).toFixed(2));
+        }
+
+        // console.log(input.join(' '))
+        inputs.push(input);
+      }
+
+      // console.log(inputs);
+      var res = network.feedForward(inputs.reduce((a, b) => a.concat(b), []));
+
+      document.querySelector('#res').innerHTML = res
+        .tolist()
+        .map((item, index) => ({
+          index: index,
+          prob: +item[0]*100
+        }))
+        .sort((a, b) => b.prob - a.prob)
+        .slice(0, 3)
+        .map(item => `当前数字有 ${item.prob.toFixed(2)}% 是 ${item.index}`).join('<br>');
+    }
+
+    init();
+  </script>
+
+  <!-- Deep Learning 代码 -->
+  <script>
+
+    function sigmoid(z) {
+      return 1.0 / (1.0 + Math.exp(-z));
+    }
+
+    function sigmoid_prime(z) {
+      return sigmoid(z) * (1 - sigmoid(z));
+    }
+
+    class NetWork {
+      constructor(sizes, biases, weights) {
+        this.num_layers = sizes.length;
+        this.sizes = sizes;
+        this.biases = biases;
+        this.weights = weights;
+      }
+
+      feedForward(input) {
+        var a = nj.array(input);
+        for (var layer = 1; layer < this.num_layers; layer++) {
+          var weights = nj.array(this.weights[layer - 1]);
+          var biases = nj.array(this.biases[layer - 1]);
+
+          a = nj.sigmoid(
+            nj.add(
+              nj.dot(weights, a)
+                .reshape(biases.shape),
+              biases
+            )
+          );
+        }
+
+        return a;
+      }
+    }
+
+
+
+    fetch('https://zhoukekestar.github.io/notes/HTML/2019-07~09/deep-learning-demo/dl.json')
+      .then(d => d.json())
+      .then(d => {
+        window.network = new NetWork([784, 30, 10], d.b, d.w);
+      })
+  </script>
+</body>
+</html>

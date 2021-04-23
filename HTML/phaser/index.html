@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>phaser</title>
+  </head>
+  <body>
+    <div id="game-holder"></div>
+    <button onclick="game.bird.animations.stop('fly')">Bird Stop</button>
+    <button onclick="game.bird.animations.play('fly', 15, true)">Bird Fly</button>
+    <button onclick="game.bear.animations.play('ready');">Bear Ready</button>
+    <button onclick="game.bear.animations.play('go');">Bear Go</button>
+    <button onclick="game.jump.play()">Play Sound</button>
+    <script src='//cdn.jsdelivr.net/phaser/2.4.7/phaser.min.js'></script>
+    <script>
+
+
+      var game = null;
+      window.onload = function() {
+        game = new Phaser.Game(800, 600, Phaser.AUTO, "game-holder", {preload: preload, create: create, update: update, render: render});
+      }
+
+      var preload = function() {
+        game.load.baseURL = './assets/';
+        // images
+        game.load.image('block', 'block.png');
+        game.load.image('background', 'background.png');
+        // audio
+        game.load.audio('jump', 'jump.wav');
+        // sprite
+        game.load.spritesheet('bird', 'bird.png', 92, 64, 3);
+        game.load.spritesheet('bear', 'bear.png', 300, 360, 6);
+      }
+
+      var create = function() {
+        // audio
+        game.jump = game.add.audio('jump');
+
+        // block
+        game.block = game.add.sprite(100, 0, 'block');
+        game.block.inputEnabled = true;
+
+
+        // the second argument is the context in which your function should be called.
+        game.block.events.onInputDown.add(function(){
+          game.blockCount = game.blockCount || 0;
+          game.blockCount++;
+          if (game.blockText) {
+            game.blockText.text = 'c: ' + game.blockCount
+          } else {
+            game.blockText = game.add.text(10, 10, 'c: ' + game.blockCount, {fill: '#ffffff'});
+          }
+        })
+
+        // Game on tap
+        game.input.onTap.add(function(){
+          console.log('tap it')
+        })
+
+        // bird
+        game.bird = game.add.sprite(100, 100, 'bird');
+        game.bird.animations.add('fly'); // add(name, frames, frameRate, loop, useNumericIndex) @see http://phaser.io/docs/2.4.7/Phaser.AnimationManager.html
+        game.bird.animations.play('fly', 15, true);  // play(name, frameRate, loop, killOnComplete)
+
+        // bear
+        game.bear = game.add.sprite(200, 200, 'bear');
+        game.bear.animations.add('ready', [5, 4, 3], 20, false)
+        game.bear.animations.add('go', [2, 1, 0], 10, false)
+      }
+
+      var update = function() {
+        var block = game.block;
+        block.vx = block.vx || 1;
+        block.vy = block.vy || 1;
+
+
+        // console.log(Date.now())
+        if (block.x > 800 - 44 || block.x < 0) {
+          block.vx = -block.vx;
+        }
+
+        if (block.y > 600 - 44 || block.y < 0) {
+          block.vy = -block.vy;
+        }
+
+        block.x += block.vx;
+        block.y += block.vy;
+      }
+
+      var render = function() {
+
+      }
+
+
+    </script>
+  </body>
+</html>
