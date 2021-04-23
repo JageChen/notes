@@ -29,7 +29,7 @@ layout: default
   <div id="comments">
     <h2>Comments</h2>
     <div class='comments'></div>
-    <a class='btn-leave-comment' href="https://github.com/zhoukekestar/notes/issues/{{page.commentIssueId}}">Leave a comment</a>
+    <a class='btn-leave-comment' href="https://github.com/JageChen/notes/issues/{{page.commentIssueId}}">Leave a comment</a>
   </div>
   <script src='https://cdn.bootcss.com/es6-promise/4.1.0/es6-promise.auto.min.js'></script>
   <script src='https://cdn.bootcss.com/fetch/2.0.3/fetch.min.js'></script>
@@ -41,7 +41,7 @@ layout: default
         data.forEach(function(item) {
           var cuser = item.user.login;
           var cuserlink = "https://www.github.com/" + item.user.login;
-          var clink = "https://github.com/zhoukekestar/notes/issues/{{page.commentIssueId}}#issuecomment-" + item.url.substring(item.url.lastIndexOf("/") + 1);
+          var clink = "https://github.com/JageChen/notes/issues/{{page.commentIssueId}}#issuecomment-" + item.url.substring(item.url.lastIndexOf("/") + 1);
           var cbody = item.body_html;
           var cavatarlink = item.user.avatar_url;
           var cdate = new timeago().format(item.created_at);
@@ -59,11 +59,11 @@ layout: default
 
         // Did you know? Tell reader that she/he can leave a message.
         if (data.length === 0) {
-          comments.innerHTML = '<div class="comment"><div class="commentgravatar"><img src="https://avatars0.githubusercontent.com/u/7157346?v=3"></div><div class="commentheader"><a class="commentuser" href="https://www.github.com/zhoukekestar">zhoukekestar</a><a class="commentdate" href="javascript:;">just now</a></div><div class="commentbody"><p>No comments left so far. You can leave one for this.</p></div></div>';
+          comments.innerHTML = '<div class="comment"><div class="commentgravatar"><img src="https://avatars0.githubusercontent.com/u/7157346?v=3"></div><div class="commentheader"><a class="commentuser" href="https://www.github.com/JageChen">JageChen</a><a class="commentdate" href="javascript:;">just now</a></div><div class="commentbody"><p>No comments left so far. You can leave one for this.</p></div></div>';
         }
       }
 
-      fetch('https://api.github.com/repos/zhoukekestar/notes/issues/{{page.commentIssueId}}/comments', {
+      fetch('https://api.github.com/repos/JageChen/notes/issues/{{page.commentIssueId}}/comments', {
         headers: {
           Accept: "application/vnd.github.full+json"
         }
