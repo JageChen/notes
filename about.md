@@ -4,11 +4,12 @@ title: About Me
 permalink: /about/
 ---
 
-Career planning (based on the current situation @ 2017):
-> Roughly speaking, Front-end or Full-stack as a basis, move closer to data analysis or data visualization. Output tech & data with finance if possible.
-
-> 大致地讲，基于计算机前端或全栈，往数据（分析，可视化）靠拢，如果有可能的话，结合金融进行技术和数据输出。
+Career planning (based on the current situation @ 2021):
+> Expand around senior development skills, familiar with Spring, MVC, MyBatis principle, distributed, message queue, container, big data, etc.
+>
+> 围绕高级开发技能包展开，熟悉spring ，mvc，mybatis原理，分布式，消息队列，容器化,大数据等。
 
 I Believe `Data is Power` in the future.
 
-Profile: [zhoukekestar.github.io](http://zhoukekestar.github.io/)
+Profile: [https://jagechen.github.io/notes/](https://jagechen.github.io/notes/)
+
