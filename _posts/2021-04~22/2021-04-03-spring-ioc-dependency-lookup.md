@@ -220,5 +220,61 @@ private static void lookupByNameOrType(BeanFactory beanFactory) {
 }
 ```
 
-* 单个 Bean 对象（注解依赖）
+* 注解查找单个 Bean 对象（方法实现同上述实时查找类似这里不在阐述具体实现，这里只写需要修改的类和配置。）
 
+  为了有个区分度这里从新创建一个新的demain
+
+```java
+@Super
+public class SuperUser extends User {
+    private String address;
+
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "SuperUser{" +
+                "address='" + address + '\'' +
+                "} " + super.toString();
+    }
+}
+```
+
+​	新增xml 注解bean
+
+```java
+<bean id="superUser" class="ioc.dependency.demain.SuperUser" primary="true">
+    <property name="address" value="深圳"></property>
+</bean>
+```
+
+* 注解查找集合 Bean 对象
+
+```java
+/**
+ * 注解查找单个依赖
+**/
+private static void lookupByannotation(BeanFactory beanFactory) {
+    if (beanFactory instanceof ListableBeanFactory){
+        ListableBeanFactory listableBeanFactory = (ListableBeanFactory) beanFactory;
+        //bean的名称作为keys 相关实例作为values
+        Map<String, User> users =(Map) listableBeanFactory.getBeansWithAnnotation(Super.class);
+        System.out.println(users);
+    }
+}
+```
+
+
+
+**总结：本章主要讲解了依赖查找的三种实现方式名称、类型、注解，并且有包括单个类型和集合类型。**
+
+**这篇文章只是针对ioc 依赖查找基本的编程原理，后续有时间会单独出一篇依赖查找更多细节和原理的文章。**
+
+**下一篇我们进入依赖注入的内容。**
