@@ -21,7 +21,7 @@ commentIssueId: 2
 * 根据 Bean 类型注入
   * 单个 Bean 对象
   * 集合 Bean 对象
-* 注入容器內建 Bean 对象 **(spring 自己内部创建的默认bean)**
+* 注入容器內建 Bean 对象 **(spring 内部容器管理的bean)**
 *  注入非 Bean 对象 **(非spring创建的bean，通过依赖创建)**
 * 注入类型 
   *  实时注入**（前面的操作都是实时注入）**
