@@ -259,7 +259,7 @@ public class SuperUser extends User {
 
 ```java
 /**
- * 注解查找单个依赖
+ * 注解查找集合依赖
 **/
 private static void lookupByannotation(BeanFactory beanFactory) {
     if (beanFactory instanceof ListableBeanFactory){
@@ -271,10 +271,13 @@ private static void lookupByannotation(BeanFactory beanFactory) {
 }
 ```
 
+**代码地址：**https://github.com/JageChen/jage-learning/tree/main/spring-ioc/dependency-lookup
 
+---
 
 **总结：本章主要讲解了依赖查找的三种实现方式名称、类型、注解，并且有包括单个类型和集合类型。**
 
 **这篇文章只是针对ioc 依赖查找基本的编程原理，后续有时间会单独出一篇依赖查找更多细节和原理的文章。**
 
 **下一篇我们进入依赖注入的内容。**
+
