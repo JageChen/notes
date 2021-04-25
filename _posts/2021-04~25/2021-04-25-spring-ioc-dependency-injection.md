@@ -160,7 +160,7 @@ Exception in thread "main" org.springframework.beans.factory.NoSuchBeanDefinitio
 	at ioc.dependency.injection.InjectionDemo.main(InjectionDemo.java:23)
 ```
 
-**代码地址：**https://github.com/JageChen/jage-learning/tree/main/spring-ioc/dependency-injection
+**代码地址：**<a href="https://github.com/JageChen/jage-learning/tree/main/spring-ioc/dependency-injection">ioc 依赖注入源码地址</a>
 
 ---
 

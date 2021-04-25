@@ -271,7 +271,7 @@ private static void lookupByannotation(BeanFactory beanFactory) {
 }
 ```
 
-**代码地址：**https://github.com/JageChen/jage-learning/tree/main/spring-ioc/dependency-lookup
+**代码地址：**<a href="https://github.com/JageChen/jage-learning/tree/main/spring-ioc/dependency-lookup">ioc 依赖查找源码地址</a>
 
 ---
 
