@@ -168,5 +168,5 @@ Exception in thread "main" org.springframework.beans.factory.NoSuchBeanDefinitio
 
 **IOC 的基本实现到这里就结尾了，希望也能给大家带来一些收获.**
 
-**两篇文章输出后自己也加深了印象.大家一起加油 ![img](file:///C:\Users\ADMINI~1\AppData\Local\Temp\SGPicFaceTpBq\7132\00D12571.png)**
+**两篇文章输出后自己也加深了印象.大家一起加油 ^_^**
 
