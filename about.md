@@ -9,7 +9,7 @@ Career planning (based on the current situation @ 2021):
 >
 > 围绕高级开发技能包展开，熟悉spring ，mvc，mybatis原理，分布式，消息队列，容器化,大数据等。
 
-I Believe `Data is Power` in the future.
+I When you can't stand on the giant shoulder, then imitate the giant.
 
 Profile: [https://jagechen.github.io/notes/](https://jagechen.github.io/notes/)
 
